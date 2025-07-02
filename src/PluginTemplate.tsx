@@ -6,11 +6,6 @@ import {
   PluginData,
   Services
 } from './types';
-import {
-  generateId,
-  debounce,
-  formatRelativeTime
-} from './utils';
 
 // TEMPLATE: Import your components here
 // import { YourComponent } from './components';
@@ -31,8 +26,6 @@ import {
 class PluginTemplate extends React.Component<PluginTemplateProps, PluginTemplateState> {
   private themeChangeListener: ((theme: string) => void) | null = null;
   private pageContextUnsubscribe: (() => void) | null = null;
-  private refreshInterval: ReturnType<typeof setInterval> | null = null;
-  private debouncedRefresh: () => void;
 
   constructor(props: PluginTemplateProps) {
     super(props);
@@ -46,8 +39,6 @@ class PluginTemplate extends React.Component<PluginTemplateProps, PluginTemplate
       data: null // TODO: Replace with your plugin's data structure
     };
 
-    // Create debounced refresh function
-    this.debouncedRefresh = debounce(this.refreshData.bind(this), 1000);
   }
 
   async componentDidMount() {
@@ -66,9 +57,6 @@ class PluginTemplate extends React.Component<PluginTemplateProps, PluginTemplate
 
   componentWillUnmount() {
     this.cleanupServices();
-    if (this.refreshInterval) {
-      clearInterval(this.refreshInterval);
-    }
   }
 
   /**
@@ -131,87 +119,10 @@ class PluginTemplate extends React.Component<PluginTemplateProps, PluginTemplate
    * Load initial data for the plugin
    */
   private async loadInitialData(): Promise<void> {
-    this.setState({ isLoading: true, error: '' });
-
-    try {
-      // TODO: Replace this with your actual data loading logic
-      const data = await this.fetchPluginData();
-      this.setState({ data, isLoading: false });
-
-      // Set up auto-refresh if configured
-      const refreshInterval = this.props.config?.refreshInterval || 60000; // Default 1 minute
-      this.refreshInterval = setInterval(() => {
-        this.debouncedRefresh();
-      }, refreshInterval);
-
-    } catch (error) {
-      console.error('PluginTemplate: Failed to load data:', error);
-      this.setState({ 
-        error: 'Failed to load data',
-        isLoading: false 
-      });
-    }
+    // TODO: Add your plugin's data loading logic here
+    this.setState({ isLoading: false, error: '' });
   }
 
-  /**
-   * Fetch plugin data - TODO: Replace with your actual data fetching logic
-   */
-  private async fetchPluginData(): Promise<PluginData> {
-    const { services } = this.props;
-
-    // TEMPLATE: Example API call - replace with your actual API endpoints
-    if (services.api) {
-      try {
-        const response = await services.api.get('/api/plugin-template/data');
-        return response.data;
-      } catch (error) {
-        console.warn('PluginTemplate: API call failed, using mock data');
-      }
-    }
-
-    // Mock data for development
-    return {
-      id: generateId(),
-      name: 'Sample Data',
-      value: Math.floor(Math.random() * 100),
-      timestamp: new Date().toISOString()
-    };
-  }
-
-  /**
-   * Refresh plugin data
-   */
-  private async refreshData(): Promise<void> {
-    if (this.state.isLoading) return;
-
-    try {
-      const data = await this.fetchPluginData();
-      this.setState({ data, error: '' });
-    } catch (error) {
-      console.error('PluginTemplate: Failed to refresh data:', error);
-      this.setState({ error: 'Failed to refresh data' });
-    }
-  }
-
-  /**
-   * Handle user interactions - TODO: Customize for your plugin
-   */
-  private handleRefreshClick = (): void => {
-    this.refreshData();
-  };
-
-  private handleSettingsChange = async (key: string, value: any): Promise<void> => {
-    const { services } = this.props;
-    
-    if (services.settings) {
-      try {
-        await services.settings.setSetting?.(key, value);
-        console.log(`PluginTemplate: Setting ${key} updated to:`, value);
-      } catch (error) {
-        console.error('PluginTemplate: Failed to save setting:', error);
-      }
-    }
-  };
 
   /**
    * Render loading state
@@ -233,9 +144,6 @@ class PluginTemplate extends React.Component<PluginTemplateProps, PluginTemplate
       <div className="plugin-template-error">
         <div className="error-icon">⚠️</div>
         <p>{this.state.error}</p>
-        <button onClick={this.handleRefreshClick} className="retry-button">
-          Try Again
-        </button>
       </div>
     );
   }
@@ -244,8 +152,10 @@ class PluginTemplate extends React.Component<PluginTemplateProps, PluginTemplate
    * Render main plugin content
    */
   private renderContent(): JSX.Element {
-    const { data } = this.state;
-    const { title = "Plugin Template", description = "A template for BrainDrive plugins" } = this.props;
+    const { title = "Plugin Template", description = "A template for BrainDrive plugins", services, moduleId, config, pluginId, instanceId } = this.props;
+
+    // Get page context information
+    const pageContext = services.pageContext?.getCurrentPageContext();
 
     return (
       <div className="plugin-template-content">
@@ -254,36 +164,50 @@ class PluginTemplate extends React.Component<PluginTemplateProps, PluginTemplate
           <p>{description}</p>
         </div>
 
-        {/* TODO: Replace this with your actual plugin content */}
-        <div className="plugin-body">
-          {data ? (
-            <div className="data-display">
-              <div className="data-item">
-                <label>Name:</label>
-                <span>{data.name}</span>
-              </div>
-              <div className="data-item">
-                <label>Value:</label>
-                <span>{data.value}</span>
-              </div>
-              <div className="data-item">
-                <label>Last Updated:</label>
-                <span>{formatRelativeTime(data.timestamp)}</span>
-              </div>
+        {/* Plugin Information */}
+        <div className="plugin-info">
+          <h4>Plugin Information</h4>
+          <div className="info-grid">
+            <div className="info-item">
+              <strong>Plugin ID:</strong> {pluginId || 'Not provided'}
             </div>
-          ) : (
-            <p>No data available</p>
-          )}
-        </div>
-
-        <div className="plugin-actions">
-          <button 
-            onClick={this.handleRefreshClick}
-            disabled={this.state.isLoading}
-            className="refresh-button"
-          >
-            {this.state.isLoading ? 'Refreshing...' : 'Refresh'}
-          </button>
+            <div className="info-item">
+              <strong>Module ID:</strong> {moduleId || 'Not provided'}
+            </div>
+            <div className="info-item">
+              <strong>Instance ID:</strong> {instanceId || 'Not provided'}
+            </div>
+            <div className="info-item">
+              <strong>Current Theme:</strong> {this.state.currentTheme}
+            </div>
+            <div className="info-item">
+              <strong>Configuration:</strong>
+              <ul>
+                <li>Refresh Interval: {config?.refreshInterval || 'Not set'}</li>
+                <li>Show Advanced Options: {config?.showAdvancedOptions ? 'Yes' : 'No'}</li>
+                <li>Custom Setting: {config?.customSetting || 'Not set'}</li>
+              </ul>
+            </div>
+            <div className="info-item">
+              <strong>Page Context:</strong>
+              <ul>
+                <li>Page ID: {pageContext?.pageId || 'Not available'}</li>
+                <li>Page Name: {pageContext?.pageName || 'Not available'}</li>
+                <li>Page Route: {pageContext?.pageRoute || 'Not available'}</li>
+                <li>Is Studio Page: {pageContext?.isStudioPage ? 'Yes' : 'No'}</li>
+              </ul>
+            </div>
+            <div className="info-item">
+              <strong>Services Available:</strong>
+              <ul>
+                <li>API: {services.api ? '✅' : '❌'}</li>
+                <li>Event: {services.event ? '✅' : '❌'}</li>
+                <li>Theme: {services.theme ? '✅' : '❌'}</li>
+                <li>Settings: {services.settings ? '✅' : '❌'}</li>
+                <li>Page Context: {services.pageContext ? '✅' : '❌'}</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -293,7 +217,7 @@ class PluginTemplate extends React.Component<PluginTemplateProps, PluginTemplate
     const { currentTheme, isInitializing, error } = this.state;
 
     return (
-      <div className={`plugin-template plugin-template--${currentTheme}`}>
+      <div className={`plugin-template ${currentTheme === 'dark' ? 'dark-theme' : ''}`}>
         {isInitializing ? (
           this.renderLoading()
         ) : error ? (

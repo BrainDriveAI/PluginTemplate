@@ -140,7 +140,7 @@ class PluginTemplateLifecycleManager(BaseLifecycleManager):
                     "description": "A template for BrainDrive plugins",
                     "config": {
                         "refreshInterval": 60000,
-                        "showAdvancedOptions": false,
+                        "showAdvancedOptions": False,
                         "customSetting": "default"
                     }
                 },
@@ -232,7 +232,10 @@ class PluginTemplateLifecycleManager(BaseLifecycleManager):
                 },
                 "messages": {},
                 "required_services": {
-                    "settings": {"methods": ["getSetting", "setSetting"], "version": "1.0.0"}
+                    "settings": {"methods": ["getSetting", "setSetting"], "version": "1.0.0"},
+                    "api": {"methods": ["get", "post", "put", "delete"], "version": "1.0.0"},
+                    "theme": {"methods": ["getCurrentTheme", "addThemeChangeListener", "removeThemeChangeListener"], "version": "1.0.0"},
+
                 },
                 "dependencies": [],
                 "layout": {

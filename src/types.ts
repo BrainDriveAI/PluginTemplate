@@ -18,6 +18,8 @@ export interface EventService {
 
 export interface ThemeService {
   getCurrentTheme: () => string;
+  setTheme: (theme: string) => void;
+  toggleTheme: () => void;
   addThemeChangeListener: (callback: (theme: string) => void) => void;
   removeThemeChangeListener: (callback: (theme: string) => void) => void;
 }
@@ -60,6 +62,8 @@ export interface ApiResponse {
 // TEMPLATE: Plugin-specific types - customize these for your plugin
 export interface PluginTemplateProps {
   moduleId?: string;
+  pluginId?: string;
+  instanceId?: string;
   services: Services;
   // TODO: Add your plugin-specific props here
   title?: string;

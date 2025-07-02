@@ -11,6 +11,7 @@ module.exports = {
   mode: "development",
   entry: "./src/index",
   output: {
+    //path: path.resolve(__dirname, '/path to your install/BrainDrive/backend/plugins/shared/PluginTemplate/v1.0.0/dist'),
     path: path.resolve(__dirname, 'dist'),
     publicPath: "auto",
     clean: true,
@@ -46,6 +47,7 @@ module.exports = {
       exposes: {
         // TEMPLATE: Update the expose path to match your plugin name
         [`./` + PLUGIN_NAME]: "./src/index",
+        "./SettingsExample": "./src/components/SettingsExample",
       },
       shared: {
         react: {

@@ -59,14 +59,36 @@ if (process.env.NODE_ENV === 'development' && typeof window !== 'undefined') {
           }
         },
         theme: {
-          getCurrentTheme: () => 'light',
+          getCurrentTheme: () => {
+            const currentTheme = localStorage.getItem('mock-theme') || 'light';
+            return currentTheme;
+          },
+          setTheme: (theme: string) => {
+            console.log('Mock setTheme:', theme);
+            localStorage.setItem('mock-theme', theme);
+            // Trigger theme change listeners
+            const event = new CustomEvent('mock-theme-change', { detail: theme });
+            window.dispatchEvent(event);
+          },
+          toggleTheme: () => {
+            const currentTheme = localStorage.getItem('mock-theme') || 'light';
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            console.log('Mock toggleTheme:', currentTheme, '->', newTheme);
+            localStorage.setItem('mock-theme', newTheme);
+            // Trigger theme change listeners
+            const event = new CustomEvent('mock-theme-change', { detail: newTheme });
+            window.dispatchEvent(event);
+          },
           addThemeChangeListener: (callback: (theme: string) => void) => {
             console.log('Mock theme listener added');
+            const handler = (event: CustomEvent) => callback(event.detail);
+            window.addEventListener('mock-theme-change', handler as EventListener);
             // Simulate theme change after 5 seconds for testing
             setTimeout(() => callback('dark'), 5000);
           },
           removeThemeChangeListener: (callback: (theme: string) => void) => {
             console.log('Mock theme listener removed');
+            // In a real implementation, you'd need to track and remove the specific listener
           }
         },
         settings: {
