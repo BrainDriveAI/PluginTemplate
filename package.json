@@ -1,0 +1,42 @@
+{
+  "name": "plugin-template",
+  "version": "1.0.0",
+  "description": "BrainDrive Plugin Template - A minimal starter template for creating BrainDrive plugins",
+  "main": "dist/remoteEntry.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development --watch",
+    "start": "webpack serve --mode development",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "braindrive",
+    "plugin",
+    "template",
+    "react",
+    "typescript",
+    "starter"
+  ],
+  "author": "BrainDrive",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "css-loader": "^6.8.1",
+    "html-webpack-plugin": "^5.5.3",
+    "style-loader": "^3.3.3",
+    "ts-loader": "^9.4.4",
+    "typescript": "^5.1.6",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}

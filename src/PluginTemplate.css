@@ -1,0 +1,286 @@
+/* TEMPLATE: BrainDrive Plugin Template Styles */
+/* TODO: Customize these styles for your plugin */
+
+/* CSS Variables for theme support */
+:root {
+  --plugin-bg-primary: #ffffff;
+  --plugin-bg-secondary: #f8f9fa;
+  --plugin-text-primary: #212529;
+  --plugin-text-secondary: #6c757d;
+  --plugin-border: #dee2e6;
+  --plugin-accent: #007bff;
+  --plugin-accent-hover: #0056b3;
+  --plugin-success: #28a745;
+  --plugin-warning: #ffc107;
+  --plugin-danger: #dc3545;
+  --plugin-shadow: rgba(0, 0, 0, 0.1);
+  --plugin-radius: 8px;
+  --plugin-spacing-xs: 4px;
+  --plugin-spacing-sm: 8px;
+  --plugin-spacing-md: 16px;
+  --plugin-spacing-lg: 24px;
+  --plugin-spacing-xl: 32px;
+}
+
+/* Dark theme variables */
+.plugin-template--dark {
+  --plugin-bg-primary: #1a1a1a;
+  --plugin-bg-secondary: #2d2d2d;
+  --plugin-text-primary: #ffffff;
+  --plugin-text-secondary: #b0b0b0;
+  --plugin-border: #404040;
+  --plugin-accent: #4dabf7;
+  --plugin-accent-hover: #339af0;
+  --plugin-shadow: rgba(0, 0, 0, 0.3);
+}
+
+/* Main plugin container */
+.plugin-template {
+  background-color: var(--plugin-bg-primary);
+  color: var(--plugin-text-primary);
+  border: 1px solid var(--plugin-border);
+  border-radius: var(--plugin-radius);
+  padding: var(--plugin-spacing-md);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  box-shadow: 0 2px 4px var(--plugin-shadow);
+  transition: all 0.2s ease;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Loading state */
+.plugin-template-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--plugin-spacing-xl);
+  text-align: center;
+  flex: 1;
+}
+
+.loading-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--plugin-border);
+  border-top: 3px solid var(--plugin-accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: var(--plugin-spacing-md);
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.plugin-template-loading p {
+  margin: 0;
+  color: var(--plugin-text-secondary);
+}
+
+/* Error state */
+.plugin-template-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--plugin-spacing-xl);
+  text-align: center;
+  flex: 1;
+}
+
+.error-icon {
+  font-size: 32px;
+  margin-bottom: var(--plugin-spacing-md);
+}
+
+.plugin-template-error p {
+  margin: 0 0 var(--plugin-spacing-md) 0;
+  color: var(--plugin-danger);
+}
+
+.retry-button {
+  background-color: var(--plugin-accent);
+  color: white;
+  border: none;
+  border-radius: var(--plugin-radius);
+  padding: var(--plugin-spacing-sm) var(--plugin-spacing-md);
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+}
+
+.retry-button:hover {
+  background-color: var(--plugin-accent-hover);
+}
+
+.retry-button:disabled {
+  background-color: var(--plugin-text-secondary);
+  cursor: not-allowed;
+}
+
+/* Content layout */
+.plugin-template-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.plugin-header {
+  margin-bottom: var(--plugin-spacing-lg);
+  padding-bottom: var(--plugin-spacing-md);
+  border-bottom: 1px solid var(--plugin-border);
+}
+
+.plugin-header h3 {
+  margin: 0 0 var(--plugin-spacing-xs) 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--plugin-text-primary);
+}
+
+.plugin-header p {
+  margin: 0;
+  color: var(--plugin-text-secondary);
+  font-size: 13px;
+}
+
+.plugin-body {
+  flex: 1;
+  margin-bottom: var(--plugin-spacing-lg);
+}
+
+/* Data display */
+.data-display {
+  display: flex;
+  flex-direction: column;
+  gap: var(--plugin-spacing-md);
+}
+
+.data-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--plugin-spacing-sm);
+  background-color: var(--plugin-bg-secondary);
+  border-radius: var(--plugin-radius);
+  border: 1px solid var(--plugin-border);
+}
+
+.data-item label {
+  font-weight: 500;
+  color: var(--plugin-text-secondary);
+  margin: 0;
+}
+
+.data-item span {
+  font-weight: 600;
+  color: var(--plugin-text-primary);
+}
+
+/* Actions */
+.plugin-actions {
+  display: flex;
+  gap: var(--plugin-spacing-sm);
+  justify-content: flex-end;
+  padding-top: var(--plugin-spacing-md);
+  border-top: 1px solid var(--plugin-border);
+}
+
+.refresh-button {
+  background-color: var(--plugin-accent);
+  color: white;
+  border: none;
+  border-radius: var(--plugin-radius);
+  padding: var(--plugin-spacing-sm) var(--plugin-spacing-md);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  min-width: 80px;
+}
+
+.refresh-button:hover:not(:disabled) {
+  background-color: var(--plugin-accent-hover);
+  transform: translateY(-1px);
+}
+
+.refresh-button:disabled {
+  background-color: var(--plugin-text-secondary);
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+  .plugin-template {
+    padding: var(--plugin-spacing-sm);
+  }
+  
+  .plugin-header h3 {
+    font-size: 16px;
+  }
+  
+  .data-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--plugin-spacing-xs);
+  }
+  
+  .plugin-actions {
+    justify-content: stretch;
+  }
+  
+  .refresh-button {
+    flex: 1;
+  }
+}
+
+/* Utility classes */
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.mb-0 { margin-bottom: 0; }
+.mb-1 { margin-bottom: var(--plugin-spacing-xs); }
+.mb-2 { margin-bottom: var(--plugin-spacing-sm); }
+.mb-3 { margin-bottom: var(--plugin-spacing-md); }
+.mb-4 { margin-bottom: var(--plugin-spacing-lg); }
+
+.mt-0 { margin-top: 0; }
+.mt-1 { margin-top: var(--plugin-spacing-xs); }
+.mt-2 { margin-top: var(--plugin-spacing-sm); }
+.mt-3 { margin-top: var(--plugin-spacing-md); }
+.mt-4 { margin-top: var(--plugin-spacing-lg); }
+
+.p-0 { padding: 0; }
+.p-1 { padding: var(--plugin-spacing-xs); }
+.p-2 { padding: var(--plugin-spacing-sm); }
+.p-3 { padding: var(--plugin-spacing-md); }
+.p-4 { padding: var(--plugin-spacing-lg); }
+
+.d-flex { display: flex; }
+.d-block { display: block; }
+.d-none { display: none; }
+
+.flex-column { flex-direction: column; }
+.flex-row { flex-direction: row; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.align-center { align-items: center; }
+
+/* TODO: Add your custom styles here */
