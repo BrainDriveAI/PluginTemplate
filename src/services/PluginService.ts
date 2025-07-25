@@ -1,31 +1,106 @@
-// TEMPLATE: Plugin service for handling business logic
+// TEMPLATE: Plugin service for handling business logic with comprehensive error handling
 // TODO: Customize this service for your plugin's specific needs
 
 import { ApiService, PluginData } from '../types';
+import {
+  ErrorHandler,
+  PluginError,
+  ServiceError,
+  NetworkError,
+  ValidationError,
+  ErrorStrategy,
+  ErrorSeverity,
+  ErrorUtils
+} from '../utils/errorHandling';
 
 export class PluginService {
   private apiService: ApiService | undefined;
+  private errorHandler: ErrorHandler;
 
   constructor(apiService?: ApiService) {
     this.apiService = apiService;
+    
+    // Initialize error handler for this service
+    this.errorHandler = new ErrorHandler(
+      {
+        maxRetries: 3,
+        retryDelay: 1000,
+        enableLogging: true,
+        enableReporting: true,
+        fallbackValues: {
+          plugindata: null,
+          emptyarray: [],
+          defaultobject: {}
+        }
+      },
+      {
+        component: 'PluginService',
+        additionalData: { service: 'plugin-template' }
+      }
+    );
   }
 
   /**
-   * Fetch plugin data from API
+   * Fetch plugin data from API with comprehensive error handling
    * TODO: Replace with your actual API endpoints and data structure
    */
   async fetchData(): Promise<PluginData> {
-    if (!this.apiService) {
-      throw new Error('API service not available');
-    }
+    return this.errorHandler.safeAsync(async () => {
+      // Validate API service availability
+      if (!this.apiService) {
+        throw new ServiceError(
+          'API service not available',
+          'api',
+          'SERVICE_UNAVAILABLE',
+          { method: 'fetchData' },
+          false
+        );
+      }
 
-    try {
-      const response = await this.apiService.get('/api/plugin-template/data');
-      return response.data;
-    } catch (error) {
-      console.error('PluginService: Failed to fetch data:', error);
-      throw new Error('Failed to fetch plugin data');
-    }
+      try {
+        const response = await this.apiService.get('/api/plugin-template/data');
+        
+        // Validate response structure
+        if (!response || typeof response !== 'object') {
+          throw new NetworkError(
+            'Invalid response format from API',
+            (response as any)?.status,
+            '/api/plugin-template/data'
+          );
+        }
+
+        // Validate response data
+        const data = response.data;
+        if (!data) {
+          throw new NetworkError(
+            'No data received from API',
+            response.status,
+            '/api/plugin-template/data'
+          );
+        }
+
+        // Validate data structure
+        this.validateData(data);
+        
+        console.log('PluginService: Data fetched successfully');
+        return data;
+
+      } catch (error) {
+        if (error instanceof PluginError) {
+          throw error; // Re-throw our custom errors
+        }
+
+        // Handle network/API errors
+        const networkError = new NetworkError(
+          `Failed to fetch plugin data: ${error instanceof Error ? error.message : 'Unknown error'}`,
+          undefined,
+          '/api/plugin-template/data'
+        );
+        
+        console.error('PluginService: API fetch failed:', networkError);
+        throw networkError;
+      }
+    }, null, ErrorStrategy.RETRY);
   }
 
   /**

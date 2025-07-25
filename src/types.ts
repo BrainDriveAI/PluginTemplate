@@ -78,6 +78,8 @@ export interface PluginTemplateState {
   currentTheme: string;
   isInitializing: boolean;
   data: any; // Replace 'any' with your specific data type
+  lastError: Error | null;
+  retryAvailable: boolean;
 }
 
 // TEMPLATE: Plugin configuration interface

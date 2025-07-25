@@ -15,9 +15,9 @@ This guide provides detailed instructions for customizing and developing your Br
 ### 2. Development Environment
 
 - [ ] Install dependencies: `npm install`
-- [ ] Start development server: `npm start`
-- [ ] Verify template loads at `http://localhost:3003`
-- [ ] Test theme switching and mock services
+- [ ] Build the plugin: `npm run build`
+- [ ] Install plugin through BrainDrive Plugin Manager for testing
+- [ ] Test functionality within BrainDrive environment
 
 ### 3. Customization
 
@@ -29,10 +29,9 @@ This guide provides detailed instructions for customizing and developing your Br
 
 ### 4. Build and Deploy
 
-- [ ] Build plugin: `./build.sh`
-- [ ] Test built bundle
+- [ ] Build plugin: `npm run build`
 - [ ] Install via BrainDrive Plugin Manager
-- [ ] Verify functionality in BrainDrive
+- [ ] Test functionality in BrainDrive environment
 
 ## 🔧 Detailed Customization Steps
 
@@ -339,12 +338,12 @@ private async safeApiCall<T>(
 #### 8.1 Development Testing
 
 ```bash
-# Start development server
-npm start
+# Build the plugin
+npm run build
 
-# Test in browser at http://localhost:3003
-# Verify mock services work
-# Test theme switching
+# Install via BrainDrive Plugin Manager
+# Test functionality within BrainDrive
+# Verify service integration works
 # Check responsive design
 ```
 
@@ -352,12 +351,12 @@ npm start
 
 ```bash
 # Build plugin
-./build.sh
+npm run build
 
 # Check bundle size
 ls -la dist/remoteEntry.js
 
-# Test bundle loads correctly
+# Verify bundle was created successfully
 ```
 
 #### 8.3 Integration Testing

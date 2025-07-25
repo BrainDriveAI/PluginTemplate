@@ -107,15 +107,96 @@ export const isEmpty = (value: any): boolean => {
 };
 
 /**
- * Safely parse JSON with error handling
+ * Safely parse JSON with comprehensive error handling
  */
 export const safeJsonParse = <T = any>(jsonString: string, defaultValue: T): T => {
   try {
-    return JSON.parse(jsonString);
+    // Validate input
+    if (typeof jsonString !== 'string') {
+      console.warn('safeJsonParse: Input is not a string:', typeof jsonString);
+      return defaultValue;
+    }
+
+    if (jsonString.trim() === '') {
+      console.warn('safeJsonParse: Input is empty string');
+      return defaultValue;
+    }
+
+    const parsed = JSON.parse(jsonString);
+    console.log('safeJsonParse: Successfully parsed JSON');
+    return parsed;
   } catch (error) {
-    console.warn('Failed to parse JSON:', error);
+    console.warn('safeJsonParse: Failed to parse JSON:', {
+      error: error instanceof Error ? error.message : error,
+      input: jsonString.substring(0, 100) + (jsonString.length > 100 ? '...' : ''),
+      inputLength: jsonString.length
+    });
     return defaultValue;
   }
+};
+
+/**
+ * Safely stringify JSON with error handling
+ */
+export const safeJsonStringify = (value: any, defaultValue: string = '{}'): string => {
+  try {
+    return JSON.stringify(value, null, 2);
+  } catch (error) {
+    console.warn('safeJsonStringify: Failed to stringify value:', {
+      error: error instanceof Error ? error.message : error,
+      valueType: typeof value
+    });
+    return defaultValue;
+  }
+};
+
+/**
+ * Safe async operation wrapper with timeout
+ */
+export const withTimeout = <T>(
+  promise: Promise<T>,
+  timeoutMs: number,
+  timeoutMessage: string = 'Operation timed out'
+): Promise<T> => {
+  return Promise.race([
+    promise,
+    new Promise<never>((_, reject) => {
+      setTimeout(() => {
+        reject(new Error(timeoutMessage));
+      }, timeoutMs);
+    })
+  ]);
+};
+
+/**
+ * Retry an async operation with exponential backoff
+ */
+export const retryAsync = async <T>(
+  operation: () => Promise<T>,
+  maxRetries: number = 3,
+  baseDelay: number = 1000
+): Promise<T> => {
+  let lastError: Error;
+
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    try {
+      return await operation();
+    } catch (error) {
+      lastError = error instanceof Error ? error : new Error(String(error));
+      
+      if (attempt === maxRetries) {
+        console.error(`retryAsync: All ${maxRetries + 1} attempts failed:`, lastError);
+        throw lastError;
+      }
+
+      const delay = baseDelay * Math.pow(2, attempt);
+      console.warn(`retryAsync: Attempt ${attempt + 1} failed, retrying in ${delay}ms:`, lastError.message);
+      
+      await new Promise(resolve => setTimeout(resolve, delay));
+    }
+  }
+
+  throw lastError!;
 };
 
 /**
