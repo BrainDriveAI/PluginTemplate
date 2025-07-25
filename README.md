@@ -63,7 +63,7 @@ This template serves as a **starting point** for BrainDrive plugin development, 
 
 ### Customization Checklist
 - [ ] Update `package.json` name, description, and version
-- [ ] Customize `lifecycle_manager.py` plugin and module data
+- [ ] Customize `lifecycle_manager.py` plugin and module data ([see guide](references/LIFECYCLE_MANAGER_CUSTOMIZATION_GUIDE.md))
 - [ ] Replace template components with your functionality
 - [ ] Update error types and handling for your use cases
 - [ ] Add your specific service integrations
@@ -154,6 +154,14 @@ await this.errorHandler.safeAsync(async () => {
 ### Documentation
 - **[Developer Guide](DEVELOPER_GUIDE.md)** - Comprehensive implementation guide
 - **[Error Handling Guide](ERROR_HANDLING_GUIDE.md)** - Detailed error handling reference
+- **[Lifecycle Manager Customization Guide](references/LIFECYCLE_MANAGER_CUSTOMIZATION_GUIDE.md)** - Complete guide for customizing lifecycle_manager.py
+
+### Lifecycle Manager References
+- **[Lifecycle Manager Reference](references/Lifecycle-Manager-Reference.md)** - Complete lifecycle manager architecture and function reference
+- **[Plugin Data Field Reference](references/Plugin-Data-Field-Reference.md)** - Detailed reference for all plugin_data fields
+- **[Module Data Field Reference](references/Module-Data-Field-Reference.md)** - Comprehensive guide to module_data configuration
+
+### Additional Resources
 - **Inline Comments** - Extensive code documentation and TODOs
 
 ### Key Concepts
@@ -248,6 +256,7 @@ private async initializeYourServices(): Promise<void> {
 ### 4. Update Plugin Metadata
 - Modify `package.json` with your plugin information
 - Customize `lifecycle_manager.py` with your plugin data and module definitions
+  - **See [Lifecycle Manager Customization Guide](references/LIFECYCLE_MANAGER_CUSTOMIZATION_GUIDE.md)** for detailed instructions
 
 ## 📋 Requirements
 
