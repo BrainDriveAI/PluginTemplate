@@ -1,6 +1,6 @@
 # PluginTemplate - BrainDrive Plugin Development Template
 
-A comprehensive template for creating robust BrainDrive plugins with best-practice error handling, service integration, and component architecture. This template provides developers with a solid foundation for building production-ready BrainDrive plugins.
+A comprehensive template for creating robust [BrainDrive](https://github.com/BrainDriveAI/BrainDrive) plugins with best-practice error handling, service integration, and component architecture. This template provides developers with a solid foundation for building production-ready BrainDrive plugins.
 
 ## 📸 Plugin Demo
 
