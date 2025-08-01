@@ -1,6 +1,8 @@
-# PluginTemplate - BrainDrive Plugin Development Template
+# BrainDrive Plugin Development Template
 
-A comprehensive template for creating robust [BrainDrive](https://github.com/BrainDriveAI/BrainDrive) plugins with best-practice error handling, service integration, and component architecture. This template provides developers with a solid foundation for building production-ready BrainDrive plugins.
+A comprehensive template for creating robust [BrainDrive](https://github.com/BrainDriveAI/BrainDrive) plugins with best-practice error handling, service integration, and component architecture. 
+
+Gives BrainDrive Builders a solid foundation for building production-ready BrainDrive plugins.
 
 ## 📸 Plugin Demo
 
@@ -294,8 +296,12 @@ When contributing to this template:
 4. Include tests for new functionality
 5. Follow the established code patterns
 
----
+## Questions?
 
-**Build Robust BrainDrive Plugins with Confidence! 🚀**
+Post at [community.braindrive.ai](https://community.braindrive.ai). We're here to build the future of user-owned AI together. 
 
-*This template provides everything you need to create production-ready BrainDrive plugins with comprehensive error handling and best practices.*
+## License
+
+[MIT Licensed](LICENSE) - BrainDrive is built for your ownership & freedom. Your AI. Your Rules. 
+
+
