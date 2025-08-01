@@ -296,6 +296,10 @@ When contributing to this template:
 4. Include tests for new functionality
 5. Follow the established code patterns
 
+## Full Project Documentation Index
+
+[BrainDrive Documentation Index](https://github.com/BrainDriveAI/BrainDrive/blob/main/DOCUMENTATION_INDEX.md)
+
 ## Questions?
 
 Post at [community.braindrive.ai](https://community.braindrive.ai). We're here to build the future of user-owned AI together. 
