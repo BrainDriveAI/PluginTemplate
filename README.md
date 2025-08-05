@@ -2,9 +2,9 @@
 
 A comprehensive template for creating robust [BrainDrive](https://github.com/BrainDriveAI/BrainDrive) plugins with best-practice error handling, service integration, and component architecture. 
 
-Gives BrainDrive Builders a solid foundation for building production-ready BrainDrive plugins.
+Use with the [Plugin Developer Quickstart Guide](https://github.com/BrainDriveAI/BrainDrive/blob/main/PLUGIN_DEVELOPER_QUICKSTART.md) to begin developing BrainDrive plugins in 30 minutes or less. 
 
-## 📸 Plugin Demo
+## 📸 Plugin Template Demo
 
 ![Plugin Template Demo](screenshot/PluginTemplateDemoPage.png)
 
@@ -285,7 +285,7 @@ private async initializeYourServices(): Promise<void> {
 - [BrainDrive](https://github.com/BrainDriveAI/BrainDrive)
 - [Plugin Development Guide](DEVELOPER_GUIDE.md)
 - [Error Handling Reference](ERROR_HANDLING_GUIDE.md)
-- [ServiceExample_Events](../ServiceExample_Events/) - Event service demo
+- [ServiceExamples](https://github.com/BrainDriveAI/BrainDrive/blob/main/SERVICE_BRIDGE_EXAMPLES.md) - Service bridge examples
 
 ## 🤝 Contributing
 
