@@ -1,22 +1,19 @@
 # BrainDrive Plugin Development Template
 
-A comprehensive template for creating robust [BrainDrive](https://github.com/BrainDriveAI/BrainDrive) plugins with best-practice error handling, service integration, and component architecture. 
+This template serves as a starting point for [BrainDrive](https://github.com/BrainDriveAI/BrainDrive) plugin development, providing:
 
-Use with the [Plugin Developer Quickstart Guide](https://github.com/BrainDriveAI/BrainDrive/blob/main/PLUGIN_DEVELOPER_QUICKSTART.md) to begin developing BrainDrive plugins in 30 minutes or less. 
-
-## 📸 Plugin Template Demo
-
-![Plugin Template Demo](screenshot/PluginTemplateDemoPage.png)
-
-## 🎯 Purpose
-
-This template serves as a **starting point** for BrainDrive plugin development, providing:
 - Comprehensive error handling patterns and utilities
 - Proper BrainDrive service integration
 - React component architecture with error boundaries
 - TypeScript type definitions and interfaces
 - Development tools and debugging utilities
 - Production-ready code structure and patterns
+
+Use with the [Plugin Developer Quickstart Guide](https://github.com/BrainDriveAI/BrainDrive/blob/main/PLUGIN_DEVELOPER_QUICKSTART.md) to begin developing BrainDrive plugins in 30 minutes or less. 
+
+## 📸 Plugin Template Demo
+
+![Plugin Template Demo](screenshot/PluginTemplateDemoPage.png)
 
 ## 📦 What's Included
 
@@ -43,6 +40,8 @@ This template serves as a **starting point** for BrainDrive plugin development, 
 ## 🚀 Getting Started
 
 ### Prerequisites
+
+- [BrainDrive](https://github.com/BrainDriveAI/BrainDrive) Platform
 - Node.js 16+ and npm/yarn
 - BrainDrive development environment
 - Basic knowledge of React and TypeScript
@@ -67,34 +66,13 @@ This template serves as a **starting point** for BrainDrive plugin development, 
 - [ ] Update `package.json` name, description, and version
 - [ ] Customize `lifecycle_manager.py` plugin and module data ([see guide](references/LIFECYCLE_MANAGER_CUSTOMIZATION_GUIDE.md))
 - [ ] Replace template components with your functionality
-- [ ] Update error types and handling for your use cases
-- [ ] Add your specific service integrations
+- [ ] Update error types and handling for your use cases ([see guide](https://github.com/BrainDriveAI/PluginTemplate/blob/main/DEVELOPER_GUIDE.md))
+- [ ] Add your specific service integrations ([see examples](https://github.com/BrainDriveAI/BrainDrive/blob/main/SERVICE_BRIDGE_EXAMPLES.md))
 - [ ] Write tests for your plugin functionality
 
-## 🔧 Template Features
+💡 Need help? Check our [comprehensive documentation](https://github.com/BrainDriveAI/BrainDrive/blob/main/DOCUMENTATION_INDEX.md) or visit [community.braindrive.ai](https://community.braindrive.ai/)
 
-### Enhanced Error Handling
-- **Custom Error Types**: `PluginError`, `ServiceError`, `ValidationError`, `NetworkError`, `ConfigurationError`
-- **Error Strategies**: Retry, Fallback, Ignore, Escalate, User Action
-- **Error Boundaries**: React component error protection
-- **User-Friendly Display**: Clear error messages with recovery options
-- **Development Tools**: Enhanced debugging and error tracking
-
-### Service Integration Patterns
-- **Safe Service Initialization**: Error-protected service setup
-- **Fallback Mechanisms**: Graceful degradation when services fail
-- **Validation**: Input and response validation with error handling
-- **Retry Logic**: Automatic retry for transient failures
-
-### Component Architecture
-- **Class-based Components**: BrainDrive-compatible React components
-- **Lifecycle Management**: Proper initialization and cleanup
-- **State Management**: Error-aware state handling
-- **Theme Support**: Automatic theme detection and switching
-
-## 🛠️ Development Workflow
-
-### 1. Plugin Structure
+## Plugin Structure
 ```
 src/
 ├── components/           # React components
@@ -108,47 +86,6 @@ src/
 │   └── utils.ts             # General utilities
 ├── types.ts            # TypeScript definitions
 └── PluginTemplate.tsx  # Main plugin component
-```
-
-### 2. Error Handling Implementation
-```typescript
-// Initialize error handler
-const errorHandler = new ErrorHandler({
-  maxRetries: 3,
-  retryDelay: 1000,
-  enableLogging: true,
-  enableReporting: true
-});
-
-// Use safe operations
-const result = await errorHandler.safeAsync(
-  () => riskyOperation(),
-  fallbackValue,
-  ErrorStrategy.RETRY
-);
-```
-
-### 3. Service Integration
-```typescript
-// Safe service initialization
-await this.errorHandler.safeAsync(async () => {
-  if (services.api) {
-    // Initialize API service with validation
-    const response = await services.api.get('/endpoint');
-    this.validateResponse(response);
-  }
-}, undefined, ErrorStrategy.FALLBACK);
-```
-
-### 4. Component Protection
-```typescript
-// Wrap components in error boundaries
-<ErrorBoundary
-  onError={(error, errorInfo) => console.error('Component error:', error)}
-  resetOnPropsChange={true}
->
-  <YourComponent />
-</ErrorBoundary>
 ```
 
 ## 🎓 Learning Resources
@@ -166,107 +103,6 @@ await this.errorHandler.safeAsync(async () => {
 ### Additional Resources
 - **Inline Comments** - Extensive code documentation and TODOs
 
-### Key Concepts
-- **Error Handling Strategies** - When and how to use different error approaches
-- **Service Integration** - Proper BrainDrive service usage patterns
-- **Component Lifecycle** - React component patterns for BrainDrive
-- **Type Safety** - TypeScript patterns for plugin development
-
-## 🧪 Testing Your Plugin
-
-### Development Testing
-1. **Build the plugin**: `npm run build`
-2. **Test error scenarios**: Simulate various error conditions
-3. **Verify error handling**: Ensure proper error display and recovery
-4. **Check service integration**: Test with and without services available
-
-### Error Handling Tests
-```typescript
-// Example error handling test
-it('should handle service failures gracefully', async () => {
-  const mockService = jest.fn().mockRejectedValue(new Error('Service failed'));
-  
-  const result = await errorHandler.safeAsync(
-    mockService,
-    'fallback',
-    ErrorStrategy.FALLBACK
-  );
-  
-  expect(result).toBe('fallback');
-});
-```
-
-### Integration Testing
-- Test plugin loading and initialization
-- Verify service integration works correctly
-- Check error boundary functionality
-- Validate user error experience
-
-## 🔍 Template Architecture
-
-### Error-First Design
-- Every operation is wrapped in error handling
-- User experience is prioritized during errors
-- Comprehensive logging and debugging support
-- Production-ready error reporting integration
-
-### Service Integration
-- Safe service initialization with fallbacks
-- Proper cleanup and resource management
-- Validation of service responses
-- Error recovery mechanisms
-
-### Component Patterns
-- Error boundaries protect component trees
-- Loading states and error states are handled consistently
-- Theme integration with error handling
-- Proper lifecycle management
-
-## 🛠️ Customization Guide
-
-### 1. Replace Template Components
-```typescript
-// Replace PluginTemplate.tsx with your main component
-export default class YourPlugin extends React.Component {
-  // Use the error handling patterns from the template
-  private errorHandler = new ErrorHandler(/* your config */);
-  
-  // Implement your plugin logic
-}
-```
-
-### 2. Add Custom Error Types
-```typescript
-// Create plugin-specific error types
-export class YourPluginError extends PluginError {
-  constructor(message: string, context?: any) {
-    super(message, 'YOUR_PLUGIN_ERROR', context);
-  }
-}
-```
-
-### 3. Customize Service Integration
-```typescript
-// Add your specific service integrations
-private async initializeYourServices(): Promise<void> {
-  await this.errorHandler.safeAsync(async () => {
-    // Your service initialization logic
-  }, undefined, ErrorStrategy.RETRY);
-}
-```
-
-### 4. Update Plugin Metadata
-- Modify `package.json` with your plugin information
-- Customize `lifecycle_manager.py` with your plugin data and module definitions
-  - **See [Lifecycle Manager Customization Guide](references/LIFECYCLE_MANAGER_CUSTOMIZATION_GUIDE.md)** for detailed instructions
-
-## 📋 Requirements
-
-- **BrainDrive Platform**: This template is designed for BrainDrive plugins
-- **Node.js 16+**: For development and building
-- **TypeScript**: Template uses TypeScript for type safety
-- **React**: Class-based React components for BrainDrive compatibility
-
 ## 🆘 Troubleshooting
 
 ### Common Issues
@@ -279,13 +115,6 @@ private async initializeYourServices(): Promise<void> {
 - Check browser console for detailed error logs
 - Use the error handler statistics for monitoring
 - Enable development mode for additional debugging info
-
-## 📚 Related Resources
-
-- [BrainDrive](https://github.com/BrainDriveAI/BrainDrive)
-- [Plugin Development Guide](DEVELOPER_GUIDE.md)
-- [Error Handling Reference](ERROR_HANDLING_GUIDE.md)
-- [ServiceExamples](https://github.com/BrainDriveAI/BrainDrive/blob/main/SERVICE_BRIDGE_EXAMPLES.md) - Service bridge examples
 
 ## 🤝 Contributing
 
